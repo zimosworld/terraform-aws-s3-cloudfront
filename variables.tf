@@ -1,5 +1,5 @@
 variable "aws_region" {
-  type    = "string"
+  type    = string
   default = "us-east-1"
 }
 
@@ -16,7 +16,7 @@ variable "ssl_domain" {
 
 variable "bucket_name" {
   description = "The name of the bucket. If omitted, Terraform will assign a random, unique name."
-  type        = "string"
+  type        = string
 }
 
 variable "acl" {
@@ -51,10 +51,6 @@ variable "default_root_object" {
   default     = "index.html"
 }
 
-variable "origin_id" {
-  description = "A unique identifier for the origin."
-}
-
 variable "origin_path" {
   description = "An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin."
   default     = ""
@@ -62,7 +58,7 @@ variable "origin_path" {
 
 variable "aliases" {
   description = "Extra CNAMEs (alternate domain names), if any, for this distribution."
-  type        = "list"
+  type        = list(string)
 }
 
 variable "price_class" {
@@ -70,40 +66,17 @@ variable "price_class" {
   default     = "PriceClass_All"
 }
 
-## Custom Origin
-
-variable "http_port" {
-  description = "The HTTP port the custom origin listens on."
-  default     = "80"
-}
-
-variable "https_port" {
-  description = "The HTTPS port the custom origin listens on."
-  default     = "443"
-}
-
-variable "origin_protocol_policy" {
-  description = "The origin protocol policy to apply to your origin. [http-only, https-only, match-viewer]"
-  default     = "http-only"
-}
-
-variable "origin_ssl_protocols" {
-  description = "The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS. A list of one or more of SSLv3, TLSv1, TLSv1.1, and TLSv1.2"
-  type        = "list"
-  default     = ["SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"]
-}
-
 ## Cache Behavior
 
 variable "allowed_methods" {
   description = "Controls which HTTP methods CloudFront processes and forwards to your Amazon S3 bucket or your custom origin."
-  type        = "list"
-  default     =  ["GET", "HEAD", "OPTIONS"]
+  type        = list(string)
+  default     = ["GET", "HEAD", "OPTIONS"]
 }
 
 variable "cache_methods" {
   description = "Controls whether CloudFront caches the response to requests using the specified HTTP methods."
-  type        = "list"
+  type        = list(string)
   default     = ["GET", "HEAD"]
 }
 
@@ -141,7 +114,7 @@ variable "use_default_certificate" {
 
 variable "ssl_support_method" {
   description = "Specifies how you want CloudFront to serve HTTPS requests. [vip, sni-only]"
-  default   = "sni-only"
+  default     = "sni-only"
 }
 
 variable "minimum_protocol_version" {
@@ -155,3 +128,4 @@ variable "restriction_type" {
   description = "The method that you want to use to restrict distribution of your content by country, [none, whitelist, blacklist]"
   default     = "none"
 }
+
